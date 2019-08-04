@@ -1,0 +1,53 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+apply plugin: 'war'
+apply plugin: 'maven-publish'
+apply plugin: 'ivy-publish'
+
+group 'hr.mcom'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+project.webAppDirName = 'WebContent'
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src'
+        }
+        resources {
+            srcDir 'src'
+        }
+    }
+}
+
+war {
+    manifest {
+        attributes(
+                "Class-Path": "",
+                "Dependencies": "com.oracle"
+        )
+    }
+}
+
+dependencies {
+	
+	// Libovi sa WildFly servera
+    providedCompile (group: 'org.glassfish', name: 'javax.faces', version: '2.2.6')
+    providedCompile (group: 'javax.ejb', name: 'javax.ejb-api', version: '3.2')
+    providedCompile (group: 'javax.inject', name: 'javax.inject', version: '1')
+    providedCompile (group: 'javax.enterprise.concurrent', name: 'javax.enterprise.concurrent-api', version: '1.0')
+    providedCompile (group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0')
+    providedCompile (group: 'javax.enterprise', name: 'cdi-api', version: '1.2')
+    //providedCompile (group: 'oracle.jdbc', name: 'OracleDriver', version: '1.4')
+    providedCompile (group: 'javax.ws.rs', name: 'javax.ws.rs-api', version: '2.0.1')
+    providedCompile (group: 'org.jboss.resteasy', name: 'resteasy-jaxrs', version: '3.1.0.Final') {
+        exclude  module: 'commons-io'
+        exclude  module: 'commons-logging'
+    }
+}
